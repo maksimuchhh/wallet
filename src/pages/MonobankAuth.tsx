@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { MONOBANK_API_URL } from "../constants";
+import { MONOBANK_API_URL, MONOBANK_TOKEN_KEY } from "../constants";
+import LocalStorage from "../utils/localStorage";
 
 function MonobankAuth() {
   const [personalData, setPersonalData] = useState<any>();
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(
+    LocalStorage.get(MONOBANK_TOKEN_KEY) || ""
+  );
 
   const fetchPersonalData = async () => {
     const requestHeaders: HeadersInit = new Headers();
@@ -14,7 +17,7 @@ function MonobankAuth() {
   };
 
   const onSubmit = async () => {
-    localStorage.setItem("mono-token", token);
+    LocalStorage.set(MONOBANK_TOKEN_KEY, token);
 
     const data = await (await fetchPersonalData()).json();
     setPersonalData(data);
@@ -32,7 +35,7 @@ function MonobankAuth() {
       <button onClick={onSubmit}>Confirm</button>
       <p>
         Click to open instruction how to get your{" "}
-        <a href="https://api.monobank.ua/" target="_blank">
+        <a href="https://api.monobank.ua/" target="_blank" rel="noreferrer">
           token
         </a>
       </p>
