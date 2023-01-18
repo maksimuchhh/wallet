@@ -1,0 +1,32 @@
+.section {
+  padding-left: 60px;
+  padding-right: 60px;
+  width: 1200px;
+  height: 750px;
+  background-color: #CDCACA;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.listItem {
+  margin-right: 60px;
+}
+
+.cardBox {
+  width: 300px;
+  height: 180px;
+  border-radius: 8px;
+  background-color: #D1BDBD;
+}
+
+.bankName {
+  display: inline;
+}
