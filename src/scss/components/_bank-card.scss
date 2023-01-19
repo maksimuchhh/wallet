@@ -1,0 +1,50 @@
+.bank-card {
+  width: 300px;
+  height: 190px;
+  background-color: white;
+  color: black;
+  border-radius: 15px;
+  position: relative;
+
+  &--mono {
+    color: white;
+    background-color: linear-gradient(black, white);
+  }
+
+  &__currency {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  &__amount {
+    position: absolute;
+    top: 40px;
+    left: 20px;
+
+    font-size: 17px;
+  }
+
+  &__number {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 18px;
+    letter-spacing: 2px;
+    white-space: nowrap;
+
+    &-subgroup {
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  &__type {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+}
