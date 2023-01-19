@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MONOBANK_API_URL, MONOBANK_TOKEN_KEY, MONOBANK_VALID_TOKEN } from "../constants";
+import { MONOBANK_API_URL, MONOBANK_TOKEN_KEY, MONOBANK_IS_VALID_TOKEN } from "../constants";
 import LocalStorage from "../utils/localStorage";
 
 function MonobankAuth() {
@@ -22,12 +22,14 @@ const navigate = useNavigate()
   const onSubmit = async () => {
     LocalStorage.set(MONOBANK_TOKEN_KEY, token);
     const data = await (await fetchPersonalData()).json();
-    const userId = Object.values(data)
+   
     
- if (userId.length > 1 ) {
-    localStorage.setItem(MONOBANK_VALID_TOKEN, 'true')
-  navigate('/')
-  } else {localStorage.removeItem(MONOBANK_TOKEN_KEY); localStorage.removeItem(MONOBANK_VALID_TOKEN)}
+ if (data.errorDescription) {
+    localStorage.removeItem(MONOBANK_TOKEN_KEY); localStorage.removeItem(MONOBANK_IS_VALID_TOKEN);
+    
+    
+  } else {localStorage.setItem(MONOBANK_IS_VALID_TOKEN, 'true')
+  navigate('/')}
   
     setPersonalData(data);
   };
@@ -49,12 +51,6 @@ const navigate = useNavigate()
         </a>
       </p>
 
-
-      {/* {personalData && (
-        <div>
-          <h2>Hello, {personalData.name}</h2>
-        </div>
-      )} */}
     </div>
   );
 }
