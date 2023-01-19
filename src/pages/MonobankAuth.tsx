@@ -20,7 +20,7 @@ const navigate = useNavigate()
   };
 
   const onSubmit = async () => {
-    LocalStorage.set(MONOBANK_TOKEN_KEY, token);
+    
     const data = await (await fetchPersonalData()).json();
    
     
@@ -28,7 +28,9 @@ const navigate = useNavigate()
     localStorage.removeItem(MONOBANK_TOKEN_KEY); localStorage.removeItem(MONOBANK_IS_VALID_TOKEN);
     
     
-  } else {localStorage.setItem(MONOBANK_IS_VALID_TOKEN, 'true')
+  } else {
+    LocalStorage.set(MONOBANK_TOKEN_KEY, token);
+    localStorage.setItem(MONOBANK_IS_VALID_TOKEN, 'true')
   navigate('/')}
   
     setPersonalData(data);
