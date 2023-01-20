@@ -2,6 +2,7 @@ import { useState } from 'react'
 import BankCard from '../components/BankCard'
 import { MONOBANK_API_URL, MONOBANK_TOKEN_KEY } from '../constants'
 import LocalStorage from '../utils/localStorage'
+import Slider from '../components/Slider'
 
 function Home() {
   const [data, setData] = useState<any>()
@@ -25,9 +26,7 @@ function Home() {
 
   return (
     <div>
-      {data?.accounts?.map((el: any) => (
-        <BankCard number={el.maskedPan[0]} type={'MasterCard'} amount={el.balance / 100} currency={el.currencyCode} />
-      ))}
+      <Slider data={data}/>
     </div>
   )
 }
