@@ -4,10 +4,12 @@ import BankCard from './BankCard'
 import { Card } from '../typescript/types'
 
 type Props = {
-  cardsList: Card[] //maybe specify the type
+  cardsList?: Card[] //maybe specify the type
 }
 
-export default function Slider({ cardsList }: Props) {
+export default function CardsSlider({ cardsList }: Props) {
+  const sortedCardsList = cardsList?.sort((a, b) => b.amount - a.amount)
+
   return (
     <Swiper
       slidesPerView={1}
@@ -36,7 +38,7 @@ export default function Slider({ cardsList }: Props) {
       modules={[Pagination, Navigation]}
       className="SliderContainer"
     >
-      {cardsList?.map((el) => (
+      {sortedCardsList?.map((el) => (
         <SwiperSlide className="slide">
           <BankCard number={el.number} type={el.type} amount={el.amount} currency={el.currency} />
         </SwiperSlide>

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { MONOBANK_API_URL, MONOBANK_TOKEN_KEY } from '../constants'
 import LocalStorage from '../utils/localStorage'
-import Slider from '../components/Slider'
+import CardsSlider from '../components/CardsSlider'
 
 function Home() {
   const [data, setData] = useState<any>()
@@ -23,18 +23,18 @@ function Home() {
       .then((personalData) => !personalData?.errorDescription && setData(personalData))
   }
 
-  const monobankCardsList = data?.accounts
-    ?.map((el: { maskedPan: string[]; balance: number; currencyCode: number }) => ({
+  const monobankCardsList = data?.accounts?.map(
+    (el: { maskedPan: string[]; balance: number; currencyCode: number }) => ({
       number: el.maskedPan?.[0],
       type: 'MasterCard',
       amount: el.balance / 100,
       currency: el.currencyCode,
-    }))
-    ?.sort((a: any, b: any) => b.amount - a.amount)
+    })
+  )
 
   return (
     <div>
-      <Slider cardsList={monobankCardsList} />
+      <CardsSlider cardsList={monobankCardsList} />
     </div>
   )
 }
