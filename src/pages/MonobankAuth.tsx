@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MONOBANK_API_URL, MONOBANK_TOKEN_KEY, MONOBANK_IS_VALID_TOKEN } from "../constants";
 import LocalStorage from "../utils/localStorage";
@@ -29,26 +29,41 @@ const saveToken = ()=> {
     requestHeaders.set("X-Token", token);
     return await fetch(`${MONOBANK_API_URL}/personal/client-info`, {
       headers: requestHeaders,
-     })
+         })
   };
 
   const onSubmit = async () => {
-    
-    const data = await (await fetchPersonalData()).json();
-   
-    
- if (data.errorDescription) {
+
+  const fetch =  (await fetchPersonalData());
+       
+   if (fetch.status != 200) {
     clearToken()
-    notification.error({message:'Invalid token', description:'Enter valid token'})
+    switch (fetch.status) {
+      case 403:
+        notification.error({message:'Invalid token', description:'Enter valid token'});
+        console.log(fetch.status,'403');
+        
+        break;
+    case 429: 
+    notification.error({message:'Too many requests', description:'Try later'});
+    console.log(fetch.status,'429');
+
+    break;
+    
+      default: 
+    notification.error({message:'Something went wrong', description:'Try later'});
+    console.log(fetch.status,'qwe');
+
+        break;
+    }
+    
   } else {
-   
     saveToken()
     navigate('/')}
-  
-    setPersonalData(data);
+    setPersonalData(await fetch.json()); 
   };
 
-  console.log("personalData", personalData);
+
 
   return (
     <div>
