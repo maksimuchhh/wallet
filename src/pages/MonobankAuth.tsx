@@ -2,6 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MONOBANK_API_URL, MONOBANK_TOKEN_KEY, MONOBANK_IS_VALID_TOKEN } from "../constants";
 import LocalStorage from "../utils/localStorage";
+import { notification } from "antd";
+
+
+
+
 
 function MonobankAuth() {
   const [personalData, setPersonalData] = useState<any>();
@@ -11,6 +16,14 @@ function MonobankAuth() {
 
 const navigate = useNavigate()
 
+const clearToken = ()=> {
+  localStorage.removeItem(MONOBANK_TOKEN_KEY); localStorage.removeItem(MONOBANK_IS_VALID_TOKEN);
+  setToken('')
+}
+const saveToken = ()=> {
+  LocalStorage.set(MONOBANK_TOKEN_KEY, token);
+  localStorage.setItem(MONOBANK_IS_VALID_TOKEN, 'true')
+}
   const fetchPersonalData = async () => {
     const requestHeaders: HeadersInit = new Headers();
     requestHeaders.set("X-Token", token);
@@ -25,13 +38,12 @@ const navigate = useNavigate()
    
     
  if (data.errorDescription) {
-    localStorage.removeItem(MONOBANK_TOKEN_KEY); localStorage.removeItem(MONOBANK_IS_VALID_TOKEN);
-    
-    
+    clearToken()
+    notification.error({message:'Invalid token', description:'Enter valid token'})
   } else {
-    LocalStorage.set(MONOBANK_TOKEN_KEY, token);
-    localStorage.setItem(MONOBANK_IS_VALID_TOKEN, 'true')
-  navigate('/')}
+   
+    saveToken()
+    navigate('/')}
   
     setPersonalData(data);
   };
