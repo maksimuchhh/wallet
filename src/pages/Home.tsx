@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import BankCard from '../components/BankCard'
 import { MONOBANK_API_URL, MONOBANK_TOKEN_KEY } from '../constants'
 import LocalStorage from '../utils/localStorage'
 import Slider from '../components/Slider'
@@ -26,7 +25,7 @@ function Home() {
 
   return (
     <div>
-      <Slider data={data}/>
+      <Slider data={data} />
     </div>
   )
 }
