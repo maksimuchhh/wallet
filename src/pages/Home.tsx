@@ -20,12 +20,21 @@ function Home() {
   if (!data) {
     fetchPersonalData()
       .then((res) => res?.json())
-      .then((personalData) => !personalData.errorDescription && setData(personalData))
+      .then((personalData) => !personalData?.errorDescription && setData(personalData))
   }
+
+  const monobankCardsList = data?.accounts
+    ?.map((el: { maskedPan: string[]; balance: number; currencyCode: number }) => ({
+      number: el.maskedPan?.[0],
+      type: 'MasterCard',
+      amount: el.balance / 100,
+      currency: el.currencyCode,
+    }))
+    ?.sort((a: any, b: any) => b.amount - a.amount)
 
   return (
     <div>
-      <Slider data={data} />
+      <Slider cardsList={monobankCardsList} />
     </div>
   )
 }

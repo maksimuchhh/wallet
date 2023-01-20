@@ -1,26 +1,19 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, Navigation, Keyboard, Mousewheel } from 'swiper'
+import { Pagination, Navigation } from 'swiper'
 import BankCard from './BankCard'
+import { Card } from '../typescript/types'
 
 type Props = {
-  data: any //maybe specify the type
+  cardsList: Card[] //maybe specify the type
 }
 
-export default function Slider({ data }: Props) {
+export default function Slider({ cardsList }: Props) {
   return (
     <Swiper
       slidesPerView={1}
       spaceBetween={0}
       slidesPerGroup={1}
-      loop={true}
-      loopFillGroupWithBlank={true}
-      keyboard={{
-        enabled: true,
-        onlyInViewport: false,
-      }}
-      mousewheel={{
-        invert: true,
-      }}
+      rewind
       breakpoints={{
         768: {
           slidesPerView: 2,
@@ -40,12 +33,12 @@ export default function Slider({ data }: Props) {
         dynamicBullets: true,
       }}
       navigation={true}
-      modules={[Pagination, Navigation, Keyboard, Mousewheel]}
+      modules={[Pagination, Navigation]}
       className="SliderContainer"
     >
-      {data?.accounts?.map((el: any) => (
+      {cardsList?.map((el) => (
         <SwiperSlide className="slide">
-          <BankCard number={el.maskedPan[0]} type={'MasterCard'} amount={el.balance / 100} currency={el.currencyCode} />
+          <BankCard number={el.number} type={el.type} amount={el.amount} currency={el.currency} />
         </SwiperSlide>
       ))}
     </Swiper>
