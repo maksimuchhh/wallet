@@ -26,7 +26,6 @@ function Home() {
   const monobankCardsList = data?.accounts?.map(
     (el: { maskedPan: string[]; balance: number; currencyCode: number }) => ({
       number: el.maskedPan?.[0],
-      type: 'MasterCard',
       amount: el.balance / 100,
       currency: el.currencyCode,
     })
