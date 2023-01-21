@@ -4,7 +4,7 @@ import BankCard from './BankCard'
 import { Card } from '../typescript/types'
 
 type Props = {
-  cardsList?: Card[] //maybe specify the type
+  cardsList?: Card[]
 }
 
 export default function CardsSlider({ cardsList }: Props) {

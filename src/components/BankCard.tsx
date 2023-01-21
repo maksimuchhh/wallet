@@ -9,6 +9,11 @@ type Props = {
 }
 
 function BankCard({ number, currency, amount, type }: Props) {
+  if (number?.charAt(0) === '4') {
+    type = 'Visa'
+  } else if (number?.charAt(0) === '5') {
+    type = 'MasterCard'
+  }
   return (
     <div className="bank-card bank-card--mono">
       {currency && <p className="bank-card__currency">{currencyCodeToText[currency]}</p>}
@@ -21,6 +26,10 @@ function BankCard({ number, currency, amount, type }: Props) {
         </p>
       )}
       {type && <p className="bank-card__type">{type}</p>}
+
+      {/* Another way */}
+      {/* {(number?.charAt(0) === '4' && <p className="bank-card__type">Visa</p>)} */}
+      {/* {(number?.charAt(0) === '5' && <p className="bank-card__type">MasterCard</p>)} */}
     </div>
   )
 }
