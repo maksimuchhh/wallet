@@ -6,12 +6,13 @@ import mastercardIcon from '../images/mastercard-icon.svg'
 
 type Props = {
   number?: string
-  type?: 'Visa' | 'MasterCard'
   amount?: number
   currency?: CURRENCY_CODES
 }
 
-function BankCard({ number, currency, amount, type }: Props) {
+function BankCard({ number, currency, amount }: Props) {
+  const paymentSystem = number?.charAt(0) === '4' ? 'Visa' : number?.charAt(0) === '5' ? 'MasterCard' : undefined
+  
   return (
     <div className="bank-card bank-card--mono">
       {currency && <p className="bank-card__currency">{currencyCodeToText[currency]}</p>}
@@ -25,10 +26,10 @@ function BankCard({ number, currency, amount, type }: Props) {
           ))}
         </p>
       )}
-      {type && (
+      {paymentSystem && (
         <img
           className="bank-card__currency-icon"
-          src={type === 'Visa' ? visaIcon : mastercardIcon}
+          src={paymentSystem === 'Visa' ? visaIcon : mastercardIcon}
           alt="Credit card Network"
         />
       )}
