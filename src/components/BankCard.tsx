@@ -1,5 +1,8 @@
 import { CURRENCY_CODES } from '../typescript/enums'
 import { currencyCodeToText } from '../utils/currency'
+import { currencySymbol } from '../utils/currencySymbol'
+import visaIcon from '../images/visa-icon.svg'
+import mastercardIcon from '../images/mastercard-icon.svg'
 
 type Props = {
   number?: string
@@ -13,7 +16,9 @@ function BankCard({ number, currency, amount }: Props) {
   return (
     <div className="bank-card bank-card--mono">
       {currency && <p className="bank-card__currency">{currencyCodeToText[currency]}</p>}
-      {amount !== undefined && <p className="bank-card__amount">{amount.toLocaleString('en')}</p>}
+      {amount !== undefined && (
+        <p className="bank-card__amount"> {`${amount.toLocaleString('en')}${currency && currencySymbol[currency]}`}</p>
+      )}
       {number && (
         <p className="bank-card__number">
           {number.match(/.{1,4}/g)?.map((el) => (
@@ -21,7 +26,13 @@ function BankCard({ number, currency, amount }: Props) {
           ))}
         </p>
       )}
-      {paymentSystem && <p className="bank-card__type">{paymentSystem}</p>}
+      {paymentSystem && (
+        <img
+          className="bank-card__currency-icon"
+          src={paymentSystem === 'Visa' ? visaIcon : mastercardIcon}
+          alt="Credit card Network"
+        />
+      )}
     </div>
   )
 }
